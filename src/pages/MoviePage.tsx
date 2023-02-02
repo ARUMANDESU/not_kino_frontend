@@ -19,10 +19,17 @@ const MoviePage = () => {
             <p>Description: {movieStore.description}</p>
             <h2>length:{movieStore.length}</h2>
             {movieStore.watchability.items?.map((item) => (
-                <a href={item.url}>
-                    <img src={item.logo.url} alt={item.name} />
-                    <h4>{item.name}</h4>
-                </a>
+                <>
+                    <a href={item.url}>
+                        <img
+                            src={item.logo.url.slice(5)}
+                            alt={"logo"}
+                            width={"35"}
+                            height={"35"}
+                        />
+                        <h4>{item.name}</h4>
+                    </a>
+                </>
             ))}
             <h2>{movieStore.title}</h2>
         </div>

@@ -48,5 +48,7 @@
   },
   "prettier": {
     "tabWidth": 4
-  }
+  },
+  "proxy": "http://localhost:3000"
+
 }
