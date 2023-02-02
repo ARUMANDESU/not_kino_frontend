@@ -11,6 +11,7 @@ configure({ enforceActions: "observed" });
 
 class MovieStore {
     movies: IMovie[] = [];
+    _id: string = "";
     title: string = "";
     description: string = "";
     rate: {
@@ -28,7 +29,7 @@ class MovieStore {
         imdb: 0,
     };
     watchability: {
-        items: IMovieWatchabilityItem[];
+        items: IMovieWatchabilityItem[] | null;
     } = {
         items: [],
     };
@@ -44,7 +45,6 @@ class MovieStore {
     };
     comments: IMovieComment[] = [];
     editing: boolean = false;
-    movieId: string = "";
 
     constructor() {
         makeAutoObservable(this);
@@ -86,6 +86,27 @@ class MovieStore {
         this.type = "";
         this.poster = { url: "", previewUrl: "" };
         this.comments = [];
+    }
+
+    async getOneMovie(id: string | undefined) {
+        await axios.get(`${url}/movie/${id}`).then((res) => {
+            this.setData(res.data);
+        });
+    }
+    setData(data: IMovie) {
+        this._id = data._id;
+
+        this.title = data.title;
+        this.description = data.description;
+        this.rate = data.rate;
+        this.votes = data.votes;
+        this.watchability = data.watchability;
+        this.length = data.length;
+        this.year = data.year;
+        this.type = data.type;
+        this.poster = data.poster;
+        this.comments = data.comments;
+        console.log(this.title);
     }
 }
 
