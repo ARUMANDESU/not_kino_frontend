@@ -10,7 +10,7 @@ const MoviePage = () => {
         movieStore.getOneMovie(id).then(() => {
             console.log(movieStore);
         });
-    }, []);
+    }, [id]);
 
     return (
         <div>

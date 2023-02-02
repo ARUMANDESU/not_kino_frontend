@@ -2,6 +2,8 @@ export interface IUserStore {
     id: number;
     email: string;
     username: string;
+    roles: string[];
+    favorites: { id: string }[];
     loggedIn: boolean;
 }
 
