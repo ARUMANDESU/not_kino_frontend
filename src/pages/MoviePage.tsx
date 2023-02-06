@@ -31,7 +31,6 @@ const MoviePage = () => {
                     </a>
                 </>
             ))}
-            <h2>{movieStore.title}</h2>
         </div>
     );
 };
