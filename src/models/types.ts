@@ -3,6 +3,7 @@ export interface IUserStore {
     email: string;
     username: string;
     roles: string[];
+    avatar_url: string;
     favorites: { id: string }[];
     loggedIn: boolean;
 }

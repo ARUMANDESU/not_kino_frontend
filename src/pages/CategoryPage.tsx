@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
-import { observer } from "mobx-react";
 import movieStore from "../stores/MovieStore";
-import MovieCompHmPg from "../components/MovieCompHmPg";
 import { Wrap } from "@chakra-ui/react";
+import MovieCompHmPg from "../components/MovieCompHmPg";
+import { useSearchParams } from "react-router-dom";
+import { observer } from "mobx-react";
 
-const HomePage = () => {
+const CategoryPage = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
     useEffect(() => {
-        movieStore.getMovies(100);
-    }, []);
+        movieStore.getMovies(100, searchParams.get("category"));
+    }, [searchParams]);
 
     return (
         <div>
@@ -20,4 +22,4 @@ const HomePage = () => {
     );
 };
 
-export default observer(HomePage);
+export default observer(CategoryPage);

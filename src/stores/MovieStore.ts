@@ -1,4 +1,4 @@
-import { configure, makeAutoObservable } from "mobx";
+import { action, configure, makeAutoObservable } from "mobx";
 import axios from "axios";
 import {
     IMovie,
@@ -50,13 +50,23 @@ class MovieStore {
         makeAutoObservable(this);
     }
 
-    async getMovies(limit: number = 50) {
-        await axios.get(`${url}/movie/?limit=${limit}`).then((res) => {
-            this.movies = res.data;
-        });
+    @action async getMovies(limit: number = 50, type: string | null = null) {
+        await axios
+            .get(
+                `${url}/movie/?limit=${limit}${
+                    type != null ? `&type=${type}` : ""
+                }`
+            )
+            .then((res) => {
+                this.setMovies(
+                    res.data.sort(function (a: IMovie, b: IMovie) {
+                        return b.rate.kp - a.rate.kp;
+                    })
+                );
+            });
     }
 
-    async addMovie(e: any) {
+    @action async addMovie(e: any) {
         e.preventDefault();
         const newMovie = {
             title: this.title,
@@ -75,7 +85,7 @@ class MovieStore {
         this.restoreToDefault();
     }
 
-    async restoreToDefault() {
+    @action async restoreToDefault() {
         this.title = "";
         this.description = "";
         this.rate = { kp: 0, imdb: 0 };
@@ -88,12 +98,12 @@ class MovieStore {
         this.comments = [];
     }
 
-    async getOneMovie(id: string | undefined) {
+    @action async getOneMovie(id: string | undefined) {
         await axios.get(`${url}/movie/${id}`).then((res) => {
             this.setData(res.data);
         });
     }
-    setData(data: IMovie) {
+    @action setData(data: IMovie) {
         this._id = data._id;
 
         this.title = data.title;
@@ -107,6 +117,9 @@ class MovieStore {
         this.poster = data.poster;
         this.comments = data.comments;
         console.log(this.title);
+    }
+    @action setMovies(value: IMovie[]) {
+        this.movies = value;
     }
 }
 

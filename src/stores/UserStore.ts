@@ -1,5 +1,5 @@
 import { IUserStore, url } from "../models/types";
-import { makeAutoObservable, makeObservable, observable } from "mobx";
+import { action, makeAutoObservable, observable } from "mobx";
 import { create, persist } from "mobx-persist";
 import axios from "axios";
 
@@ -7,35 +7,44 @@ const userInitialState: IUserStore = {
     id: 0,
     email: "",
     username: "",
+    avatar_url: "",
     roles: [],
     favorites: [],
     loggedIn: false,
 };
 
 export class UserStore {
-    @persist("object") user: IUserStore;
+    @persist("object") @observable user: IUserStore;
 
     constructor() {
         this.user = userInitialState;
         makeAutoObservable(this);
     }
 
-    setUser({ id, username, roles, favorites, email }: IUserStore) {
+    @action setUser({
+        id,
+        username,
+        roles,
+        favorites,
+        email,
+        avatar_url,
+    }: IUserStore) {
         this.user = {
             id,
             username,
             email,
+            avatar_url,
             favorites,
             roles,
             loggedIn: true,
         };
     }
 
-    removeUser() {
+    @action removeUser() {
         this.user = userInitialState;
     }
 
-    async register(data: {
+    @action async register(data: {
         email: string;
         username: string;
         password: string;
@@ -45,7 +54,7 @@ export class UserStore {
         });
     }
 
-    async login(data: { username: string; password: string }) {
+    @action async login(data: { username: string; password: string }) {
         await axios.post(`${url}/user/login`, data).then((res) => {
             this.setUser(res.data);
             return res.data.successful;
