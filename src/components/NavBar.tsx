@@ -1,8 +1,6 @@
 import React from "react";
 import {
     Box,
-    Button,
-    ButtonGroup,
     Flex,
     Heading,
     Link,
@@ -11,7 +9,6 @@ import {
     Text,
 } from "@chakra-ui/react";
 import { Link as ReachLink } from "react-router-dom";
-import { IoArrowForward } from "react-icons/io5";
 import SearchComp from "./SearchComp";
 import AccountComp from "./AccountComp";
 import ColorModeComp from "./ColorModeComp";

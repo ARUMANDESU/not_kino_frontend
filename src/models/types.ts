@@ -43,4 +43,3 @@ export interface IMovie {
     };
     comments: [IMovieComment];
 }
-export const url = "http://localhost:4000";

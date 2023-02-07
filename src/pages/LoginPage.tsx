@@ -2,19 +2,19 @@ import React from "react";
 import { userStore } from "../stores/UserStore";
 import { Link as ReachLink } from "react-router-dom";
 import {
-    Flex,
     Box,
+    Button,
+    Flex,
     FormControl,
     FormLabel,
-    Input,
-    Checkbox,
-    Stack,
-    Link,
-    Button,
     Heading,
+    Input,
+    Link,
+    Stack,
     Text,
     useColorModeValue,
 } from "@chakra-ui/react";
+
 const LoginPage = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();

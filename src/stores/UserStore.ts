@@ -1,4 +1,4 @@
-import { IUserStore, url } from "../models/types";
+import { IUserStore } from "../models/types";
 import { action, makeAutoObservable, observable } from "mobx";
 import { create, persist } from "mobx-persist";
 import axios from "axios";
@@ -49,16 +49,23 @@ export class UserStore {
         username: string;
         password: string;
     }) {
-        await axios.post(`${url}/user/register`, data).then((res) => {
-            return res.data.successful;
-        });
+        await axios
+            .post(
+                `${process.env.REACT_APP_BACKEND_BASE_URL}/user/register`,
+                data
+            )
+            .then((res) => {
+                return res.data.successful;
+            });
     }
 
     @action async login(data: { username: string; password: string }) {
-        await axios.post(`${url}/user/login`, data).then((res) => {
-            this.setUser(res.data);
-            return res.data.successful;
-        });
+        await axios
+            .post(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/login`, data)
+            .then((res) => {
+                this.setUser(res.data);
+                return res.data.successful;
+            });
     }
 }
 

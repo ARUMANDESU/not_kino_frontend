@@ -1,25 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-    Alert,
-    AlertIcon,
     Box,
     Button,
     Drawer,
     DrawerBody,
     DrawerCloseButton,
     DrawerContent,
-    DrawerFooter,
     DrawerHeader,
     DrawerOverlay,
     Input,
-    InputGroup,
-    InputRightElement,
     StackDivider,
     useDisclosure,
     VStack,
 } from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
-import { IMovie, url } from "../models/types";
+import { IMovie } from "../models/types";
 import { useDebounce } from "../hooks/debounce";
 import axios from "axios";
 import MovieSearchComp from "./MovieSearchComp";
@@ -35,7 +30,10 @@ const SearchComp = () => {
         if (debounced.length > 3) {
             const data = { payload: debounced };
             axios
-                .post(`${url}/movie/search`, data)
+                .post(
+                    `${process.env.REACT_APP_BACKEND_BASE_URL}/movie/search`,
+                    data
+                )
                 .then((res) => {
                     setMovies(res.data);
                 })

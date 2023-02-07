@@ -10,7 +10,6 @@ import {
     Input,
     Link,
     Stack,
-    Text,
     useColorModeValue,
 } from "@chakra-ui/react";
 import { Link as ReachLink } from "react-router-dom";

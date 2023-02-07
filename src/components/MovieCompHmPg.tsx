@@ -1,7 +1,7 @@
 import React from "react";
 import { IMovie } from "../models/types";
 import { Link } from "react-router-dom";
-import { Center, Image, Text, WrapItem } from "@chakra-ui/react";
+import { Image, Text, WrapItem } from "@chakra-ui/react";
 
 const MovieCompHmPg = ({ movie }: { movie: IMovie }) => {
     return (

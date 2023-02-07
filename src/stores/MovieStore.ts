@@ -1,11 +1,6 @@
 import { action, configure, makeAutoObservable } from "mobx";
 import axios from "axios";
-import {
-    IMovie,
-    IMovieComment,
-    IMovieWatchabilityItem,
-    url,
-} from "../models/types";
+import { IMovie, IMovieComment, IMovieWatchabilityItem } from "../models/types";
 
 configure({ enforceActions: "observed" });
 
@@ -53,9 +48,9 @@ class MovieStore {
     @action async getMovies(limit: number = 50, type: string | null = null) {
         await axios
             .get(
-                `${url}/movie/?limit=${limit}${
-                    type != null ? `&type=${type}` : ""
-                }`
+                `${
+                    process.env.REACT_APP_BACKEND_BASE_URL
+                }/movie/?limit=${limit}${type != null ? `&type=${type}` : ""}`
             )
             .then((res) => {
                 this.setMovies(
@@ -80,7 +75,10 @@ class MovieStore {
             poster: this.poster,
             comments: this.comments,
         };
-        await axios.post(`${url}/movie`, newMovie);
+        await axios.post(
+            `${process.env.REACT_APP_BACKEND_BASE_URL}/movie`,
+            newMovie
+        );
         this.getMovies();
         this.restoreToDefault();
     }
@@ -99,9 +97,11 @@ class MovieStore {
     }
 
     @action async getOneMovie(id: string | undefined) {
-        await axios.get(`${url}/movie/${id}`).then((res) => {
-            this.setData(res.data);
-        });
+        await axios
+            .get(`${process.env.REACT_APP_BACKEND_BASE_URL}/movie/${id}`)
+            .then((res) => {
+                this.setData(res.data);
+            });
     }
     @action setData(data: IMovie) {
         this._id = data._id;
