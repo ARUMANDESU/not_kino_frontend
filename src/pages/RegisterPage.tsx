@@ -51,8 +51,8 @@ const RegisterPage = () => {
                         >
                             <Stack spacing={4}>
                                 <FormControl id="email">
-                                    <FormLabel>Email address</FormLabel>
-                                    <Input name="username" type="username" />
+                                    <FormLabel>Email Address</FormLabel>
+                                    <Input name="email" type="email" />
                                 </FormControl>
                                 <FormControl id="username">
                                     <FormLabel>Username</FormLabel>
