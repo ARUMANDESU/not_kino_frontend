@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import movieStore from "../stores/MovieStore";
 import { useParams } from "react-router-dom";
 import { observer } from "mobx-react";
+import { Button } from "@chakra-ui/react";
+import { FcLike } from "react-icons/fc";
+import axios from "axios";
 
 const MoviePage = () => {
     const { id } = useParams();
@@ -11,6 +14,18 @@ const MoviePage = () => {
             console.log(movieStore);
         });
     }, [id]);
+    const LikeBtnHandler = async () => {
+        await axios
+            .post(
+                `${process.env.REACT_APP_BACKEND_BASE_URL}/user/addMovie/${id}`
+            )
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    };
 
     return (
         <div>
@@ -18,6 +33,9 @@ const MoviePage = () => {
             <h2>{movieStore.title}</h2>
             <p>Description: {movieStore.description}</p>
             <h2>length:{movieStore.length}</h2>
+            <Button onClick={LikeBtnHandler}>
+                <FcLike />
+            </Button>
             {movieStore.watchability.items?.map((item) => (
                 <>
                     <a href={item.url}>
